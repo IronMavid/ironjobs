@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset='utf-8'>
+        <title>Iron Jobs</title>
+
+        <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+
+        <link href='style.css' rel='stylesheet' type='text/css'>
+    </head>
+    <body>
+        <p class='message'></p>
+
+        <form class='search' action='/api/job/search' method='get'>
+            <img src='images/detail.png' alt='search' class='search-icon'>
+            <input type='text' name='query' placeholder='Search query...'>
+            <input type='submit' value='Find Jobs'>
+        </form>
+
+        <header>
+            <h1>iron jobs</h1>
+        </header>
+
+        <main>
+            <form class='add-job' action='/api/job' method='post'>
+                <input type='text' name='company' placeholder='Company name' required>
+                <input type='text' name='link' placeholder='URL or email contact' required pattern='https?://[^\s]+|[^@]+@[^@]+'>
+                <input type='text' name='notes' placeholder='Notes to applicants'>
+                <input type='submit' value='Create New Job'>
+            </form>
+
+            <ul class='jobs'></ul>
+
+            <footer>
+                &copy; TIY DC Grads
+            </footer>
+        </main>
+
+        <section class='modal-cover'></section>
+        <section class='modal'>
+            <button class='close'>X</button>
+            <h3>Job Posting Detail</h3>
+            <article>
+                <h4>Foobar</h4>
+                <p><a href='#'>http://foobar.com</a></p>
+                <p><strong>Notes:</strong> jkhasdjk falsdf hadjs klsdf sdfadsf</p>
+                <p>
+                    Post #1234567890 created on 12/19/2016
+                </p>
+            </article>
+        </section>
+
+        <script src='//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+        <!-- This library is only here for development testing... -->
+        <script src='//cdn.rawgit.com/jakerella/jquery-mockjax/master/dist/jquery.mockjax.min.js'></script>
+
+        <script src='js/view.js'></script>
+        <script src='js/api.js'></script>
+    </body>
+</html>

@@ -1,0 +1,51 @@
+
+@mixin completedButton {
+    border-color: $completedColor;
+    &::after {
+        content: "✓";
+        color: $completedColor;
+    }
+}
+
+.jobs {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 1.3em;
+    color: #666;
+
+    li {
+        padding: 1em;
+        border-bottom: 1px solid $innerBorderColor;
+
+        &:hover img, &:hover .delete {
+            opacity: 1;
+        }
+    }
+
+    img {
+        opacity: 0;
+        width: 1.1em;
+        cursor: pointer;
+        transition: all 0.3s linear;
+        position: relative;
+        top: 3px;
+    }
+
+    p {
+        display: inline;
+        padding-left: 1em;
+    }
+
+    .delete {
+        opacity: 0;
+        float: right;
+        background: none;
+        border: none;
+        color: $deleteColor;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}

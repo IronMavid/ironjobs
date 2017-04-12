@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset='utf-8'>
+        <title>TODO List</title>
+
+        <meta name='description' content='A simple app to track TODO items'>
+        <meta name='author' content=''>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+
+        <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300italic,400,400italic' rel='stylesheet' type='text/css'>
+        <link rel='stylesheet' type='text/css' href='css/main.css'>
+    </head>
+    <body>
+
+        <header>
+            <h1>todos</h1>
+        </header>
+
+        <main>
+            <form action='' method='post'>
+                <input type='text' class='new-todo' placeholder='What needs to be done?'>
+            </form>
+
+            <ul class='items'>
+                <!-- example of existing item (incomplete)
+                <li>
+                    <article>
+                        <button class='check'></button>
+                        <p>learn html</p>
+                        <input type='text' class='edit-todo' value='learn html'>
+                        <button class='delete'>X</button>
+                    </article>
+                </li>
+                -->
+                <!-- example of completed item
+                <li>
+                    <article class='completed'>
+                        <button class='check'></button>
+                        <p class='complete'>learn css</p>
+                        <input type='text' class='edit-todo' value='learn css'>
+                        <button class='delete'>X</button>
+                    </article>
+                </li>
+                -->
+                <!-- example of item currently being edited
+                <li>
+                    <article class='editing'>
+                        <button class='check'></button>
+                        <p>learn javascript</p>
+                        <input type='text' class='edit-todo' value='learn javascript'>
+                        <button class='delete'>X</button>
+                    </article>
+                </li>
+                -->
+            </ul>
+
+            <footer>
+                <p class='remaining'><span class='incomplete-items'>0</span> items left</p>
+                <nav>
+                    <ul>
+                        <li><button class='show-all active'>All</button></li>
+                        <li><button class='show-active'>Active</button></li>
+                        <li><button class='show-completed'>Completed</button></li>
+                    </ul>
+                </nav>
+                <button class='clear'>Clear completed</button>
+            </footer>
+        </main>
+
+    </body>
+</html>

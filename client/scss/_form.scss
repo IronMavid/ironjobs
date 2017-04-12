@@ -1,0 +1,38 @@
+
+.add-job input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 1em 2em;
+    border: none;
+    border-bottom: 2px solid $innerBorderColor;
+    outline: none;
+}
+
+.add-job [type='submit'] {
+    border: none;
+    font-size: 1.1em;
+	cursor: pointer;
+	padding: 10px 50px;
+	display: inline-block;
+	position: relative;
+	transition: all 0.3s;
+    background: #cb4e4e;
+    color: #fff;
+    box-shadow: 0 6px #ab3c3c;
+
+    &:hover {
+    	box-shadow: 0 4px #ab3c3c;
+    	top: 2px;
+    }
+    &:active {
+    	box-shadow: 0 0 #ab3c3c;
+    	top: 6px;
+    }
+}
+
+::-webkit-input-placeholder {
+    font-style: italic;
+}
+::-moz-input-placeholder {
+    font-style: italic;
+}
