@@ -17,9 +17,17 @@ let allJobs = [
   }
 ];
 
-
 jobRouter.get('/', function getAllJobs(req, res, next) {
-  res.json(allJobs);
+
+  res.json(allJobs.map(function outputProperties(job) {
+    return {
+      id: job.id,
+      company: job.company,
+      link: job.link
+    };
+  }));
+
+  // res.json(allJobs);
 });
 
 function addAJob(req, res, next) {
