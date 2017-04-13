@@ -1,33 +1,24 @@
 const jobRouter = require('express').Router();
+const Job = require('../models/job.model.js');
 
-let allJobs = [
-  {
-    id: "12345",                            // assigned by MongoDB
-    company: "Acme",                        // provided on creation by the front end (required)
-    link: "http://www.acmecorp.com",        // provided on creation by the front end (required, either a URL or email address)
-    notes: "Wild E. Coyote, Super Genius",  // provided on creation by the front end (optional)
-    createTime: Date.now()                  // Created by the back end (YOU)
-  },
-  {
-    id: "7892",
-    company: "Zorg",
-    link: "http://zorgindustries.com",
-    notes: "I am very disappointed",
-    createTime: Date.now()
-  }
-];
 
 jobRouter.get('/', function getAllJobs(req, res, next) {
-
-  res.json(allJobs.map(function outputProperties(job) {
-    return {
-      id: job.id,
-      company: job.company,
-      link: job.link
-    };
-  }));
-
-  // res.json(allJobs);
+  Job.find()
+  .then(function sendAllJobs(allJobs) {
+    res.json(allJobs.map(function eachJob(job){
+        return {
+          id: job._id,
+          company: job.company,
+          link: job.link
+        };
+      }));
+    })
+  .catch(function handleErrors(err){
+    console.error(err);
+    let ourError = new Error('Cannot retrieve jobs');
+    ourError.status = 500;
+    next(ourError);
+  });
 });
 
 function addAJob(req, res, next) {
@@ -39,13 +30,78 @@ function addAJob(req, res, next) {
     return;
   }
 
-  req.body.id = Math.ceil( Math.random() * 300 ); // id is random number
-  req.body.createTime = Date.now();
+  let theJobCreated = new Job({
+    company: req.body.company,
+    link: req.body.link,
+    notes: req.body.notes,
+    createTime: Date.now()
+  });
 
-  allJobs.push(req.body);
-
-  res.json( { message: 'New job added!', addedJob: req.body });
+  theJobCreated.save()
+    .then(function sendResponse(data) {
+      res.json({ message: 'Added', theJobAdded: data });
+    })
+    .catch(function handleErrors(err) {
+      console.error(err);
+      let ourError = new Error ('Unable to add Job');
+      ourError.status = 500;
+      next(ourError);
+    });
 }
+
 jobRouter.post('/', addAJob);
+
+jobRouter.get('/:jobid', function retrieveSingleFood(req, res, next) {
+  console.log('req params', req.params);
+
+  Job.findById({ _id: req.params.jobid })
+    .then(function sendBackAJob(data) {
+      if (!data) {
+        let err = new Error('That job does not exist!');
+        err.status = 404;
+        return next(err);
+      }
+      res.json({ theJobWeFound: data });
+    })
+    .catch(function handleIssues(err) {
+      let ourError = new Error ('Unable to search for Job');
+      ourError.status = 500;
+      next(err);
+    });
+});
+
+jobRouter.delete('/:jobid', function deleteAJob(req, res, next) {
+  if (!req.body) {
+    let err = new Error('You must provide a job');
+    err.status = 400;
+    return next(err);
+  }
+
+  Job.findById({ _id: req.params.jobid })
+    .then(function deleteSingleJob(theData) {
+      if (!theData) {
+        // NOTE:  figure out why a delete with an invalid job id returned no Error
+        // on the console nor an error in postman
+        let err = new Error('Cannot find a job with that ID to delete');
+        err.status = 404;
+        return next(err);
+      }
+      Job.remove(function (err, theData) {
+        if (err) {
+          err.status = 500;
+          return next(err);
+        }
+      });
+      res.json({ theJobWeDeleted: theData });
+    })
+    .catch(function handleIssue(err) {
+      console.error(err);
+      let ourError = new Error ('Unable to delete the Job');
+      ourError.status = 500;
+    });
+
+});
+
+
 
 module.exports = jobRouter;
