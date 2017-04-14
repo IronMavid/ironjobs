@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-console.log('did we get here to database-setup.js file?');
 if(!process.env.MY_DB_LOCATION) {
   console.error('No database detected!!');
   process.exit(128);
